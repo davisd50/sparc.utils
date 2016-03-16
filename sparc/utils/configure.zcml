@@ -4,8 +4,8 @@
     i18n_domain="sparc.utils">
 
     <utility
-        provides=".IShallowAttributeCopier"
-        component=".attribute_copier"
+        provides=".IReferenceAttributeCopier"
+        component=".attribute_copier.attribute_copier"
         />
 
 </configure>

@@ -16,8 +16,6 @@ Let's start by creating some interfaces
 ... 		"""some method that won't be copied"""
 >>> class ITest2(Interface):
 ... 	d = Attribute("another attribute")
->>> class ITest3(Interface):
-... 	a = Attribute("a namespace collision")
 
 Now, we'll implement these interfaces on an object
 >>> from zope.interface import alsoProvides
@@ -27,9 +25,9 @@ Now, we'll implement these interfaces on an object
 
 Now we'll create our target object and copy the attributes
 >>> from zope.component import getUtility
->>> from sparc.utils import IShallowAttributeCopier
->>> object_b = type("test_object_b", (object,))
->>> copier = getUtility(IShallowAttributeCopier)
+>>> from sparc.utils import IReferenceAttributeCopier
+>>> object_b = type("test_object_b", (object,), {})
+>>> copier = getUtility(IReferenceAttributeCopier)
 >>> copier(object_a, object_b, ITest1, ITest2)
 >>> object_b.a
 'a'

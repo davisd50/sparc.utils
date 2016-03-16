@@ -1,6 +1,6 @@
 from zope.interface import Interface
 
-class IShallowAttributeCopier(Interface):
+class IReferenceAttributeCopier(Interface):
     """Shallow copy object attribute and schema field values
     
     This will copy the attribute and schema field values on from_object onto

@@ -6,4 +6,4 @@ def Configure():
 def ConfigureTest():
     SparcConfigure([import_module(__name__)])
 
-from interfaces import IShallowAttributeCopier
+from interfaces import IReferenceAttributeCopier
