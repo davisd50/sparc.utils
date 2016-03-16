@@ -1,0 +1,41 @@
+Zope Interface attribute copier
+--------------------------------
+This utility copies the attribute and schema field values (not methods) from
+one object to another
+
+>>> from sparc.utils import ConfigureTest
+>>> ConfigureTest()
+
+Let's start by creating some interfaces
+>>> from zope.interface import Interface, Attribute
+>>> from zope import schema
+>>> class ITest1(Interface):
+...     a = Attribute("an attribute")
+... 	b = schema.Text()
+... 	def c():
+... 		"""some method that won't be copied"""
+>>> class ITest2(Interface):
+... 	d = Attribute("another attribute")
+>>> class ITest3(Interface):
+... 	a = Attribute("a namespace collision")
+
+Now, we'll implement these interfaces on an object
+>>> from zope.interface import alsoProvides
+>>> object_a = type("test_object_a", (object,), 
+... 			{'a': 'a', 'b': u'b', 'c': lambda :True, 'd': 'd'})
+>>> alsoProvides(object_a, ITest1, ITest2)
+
+Now we'll create our target object and copy the attributes
+>>> from zope.component import getUtility
+>>> from sparc.utils import IShallowAttributeCopier
+>>> object_b = type("test_object_b", (object,))
+>>> copier = getUtility(IShallowAttributeCopier)
+>>> copier(object_a, object_b, ITest1, ITest2)
+>>> object_b.a
+'a'
+>>> object_b.b
+u'b'
+>>> hasattr(object_b, 'c')
+False
+>>> object_b.d
+'d'
