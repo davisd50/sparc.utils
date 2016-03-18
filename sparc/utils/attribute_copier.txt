@@ -3,9 +3,6 @@ Zope Interface attribute copier
 This utility copies the attribute and schema field values (not methods) from
 one object to another
 
->>> from sparc.utils import ConfigureTest
->>> ConfigureTest()
-
 Let's start by creating some interfaces
 >>> from zope.interface import Interface, Attribute
 >>> from zope import schema

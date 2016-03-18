@@ -1,13 +1,11 @@
 import unittest
-from doctest import DocTestSuite
-from doctest import DocFileSuite
+from sparc.testing.fixture import test_suite_mixin
 
-import sparc.utils
 
-def test_suite():
-    return unittest.TestSuite((
-        DocFileSuite('attribute_copier.txt',
-                     package=sparc.utils),))
+class test_suite(test_suite_mixin):
+    package = 'sparc.utils'
+    module = 'attribute_copier'
+
 
 if __name__ == '__main__':
     unittest.main(defaultTest='test_suite')
