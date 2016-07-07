@@ -1,13 +1,20 @@
+from zope import schema
 from zope.interface import Interface
 
-class IRequestKwArgs(Interface):
-    """A Python dict for Requests.api.request kwargs
-    
-    Implementers should make sure these objects can be passed into such as
-    Requests.api.request(method, url, **implementation)
-    
-    Sample implementation:
-        >>> from zope.interface import implements
-        >>> class MyRequestKwArgs(dict):
-        ...     implements(IRequestKwArgs)
-    """
+
+class IRequest(Interface):
+    """Provides requests.request implementation"""
+    req_kwargs = schema.Dict(
+            title=u'kwargs',
+            description=u'A dict-like object containing a default set of' +\
+                        u'kwargs to be used by request()')
+    gooble_warnings = schema.Bool(
+            title=u'Gooble warnings',
+            description=u'True indicates to gooble warnings issued by calls to request()',
+            default=False)
+    def request(*args,**kwargs):
+        """wrapper for requests.request
+        
+        kwargs delivered to method will over-ride competing entries found in
+        IRequest.req_kwargs defaults
+        """

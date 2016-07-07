@@ -1,1 +1,1 @@
-from interfaces import IRequestKwArgs
+from interfaces import IRequest

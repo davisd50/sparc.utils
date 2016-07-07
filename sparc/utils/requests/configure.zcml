@@ -4,8 +4,8 @@
     i18n_domain="sparc.utils">
 
     <utility
-    	component=".kwargs.requestKwArgsFactory"
-    	name="sparc.utils.requests.kwargs"
+    	component=".request.requestFactory"
+    	name="sparc.utils.requests.request"
     	/>
 
 </configure>

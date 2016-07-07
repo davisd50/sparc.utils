@@ -33,7 +33,8 @@ setup(name='sparc.utils',
       zip_safe=False,
       install_requires=[
           'setuptools',
-          'zope.interface'
+          'zope.interface',
+          'requests'
           # -*- Extra requirements: -*-
       ],
       tests_require=[
