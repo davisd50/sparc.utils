@@ -2,12 +2,10 @@
     xmlns="http://namespaces.zope.org/zope"
     xmlns:i18n="http://namespaces.zope.org/i18n"
     i18n_domain="sparc.utils">
-    
-    <include package=".requests" />
 
     <utility
-        provides=".IReferenceAttributeCopier"
-        component=".attribute_copier.attribute_copier"
-        />
+    	component=".kwargs.requestKwArgsFactory"
+    	name="sparc.utils.requests.kwargs"
+    	/>
 
 </configure>
