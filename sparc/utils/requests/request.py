@@ -16,6 +16,7 @@ class Request(BaseSchemaObject):
         kwargs_updated.update(kwargs)
         if self.gooble_warnings:
             with warnings.catch_warnings():
+                warnings.simplefilter("ignore")
                 return requests.request(*args, **kwargs_updated)
         else:
             return requests.request(*args, **kwargs_updated)
