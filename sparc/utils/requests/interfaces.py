@@ -7,7 +7,8 @@ class IRequest(Interface):
     req_kwargs = schema.Dict(
             title=u'kwargs',
             description=u'A dict-like object containing a default set of' +\
-                        u'kwargs to be used by request()')
+                        u'kwargs to be used by request()',
+            default={})
     gooble_warnings = schema.Bool(
             title=u'Gooble warnings',
             description=u'True indicates to gooble warnings issued by calls to request()',
