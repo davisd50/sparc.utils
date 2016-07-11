@@ -1,6 +1,8 @@
 import requests
 import warnings
+from zope.component import getSiteManager
 from zope.component.factory import Factory
+from zope.interface import implementer
 from zope.interface import implements
 from zope.schema.fieldproperty import FieldProperty
 from interfaces import IRequest
@@ -21,3 +23,18 @@ class Request(BaseSchemaObject):
         else:
             return requests.request(*args, **kwargs_updated)
 requestFactory = Factory(Request)
+SparcRequest = requestFactory()
+
+@implementer(IRequest)
+def request_resolver(**kwargs):
+    """Resolve for a IRequest and return
+    
+    This will return a IRequest based on the following resolution order:
+    1. 'request' is given in kwargs and provides IRequest
+    2.  IRequest is available as a unnamed utility in zca
+    3.  A new IRequest is created and returned
+    """
+    if 'request' in kwargs and IRequest.providedBy(kwargs['request']):
+        return kwargs['request']
+    sm = getSiteManager()
+    return sm.queryUtility(IRequest, default=requestFactory())

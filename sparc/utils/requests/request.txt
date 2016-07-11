@@ -1,0 +1,73 @@
+Python requests package integration
+====================================
+
+The Python requests implementation does not have a convenient method to
+set a standard list of configurations to pass into each request such as
+setting class-level or module level variables.  This makes it tedious to
+use the library in different levels of code, while providing top-level
+configuration ability to a systems integrator.  A good example of this is
+the SSL 'verify' option.  In some cases, you might not want it set, on others,
+you'll want to set it to False, and still in other cases you'd want to direct
+it to a set of valid certs.
+
+To help get around these and other config issues, there are a set of 
+interfaces and implementations that allow for default config settings that
+can be overridden.
+
+We do a simple walk though on how to leverage these components.
+
+We'll start with the sparc.utils.requests.IRequest interface.  We can get
+an object providing this interface via a factory.
+
+>>> from zope.component import createObject
+>>> req = createObject(u'sparc.utils.requests.request')
+
+This object provides a 'request' method that essentially passes it's arguments
+to requests.request().
+
+>>> req.request('get', 'http://www.google.com')
+<Response [200]>
+
+We can set kwarg defaults in the req object
+>>> req.req_kwargs['data'] = {'q':'stuff'}
+>>> req.request('get', 'https://www.google.com')
+<Response [400]>
+
+Defaults will be over-ridden via kwargs directly passed in
+>>> req.request('get', 'https://www.google.com', data={'q':'different'})
+<Response [400]>
+>>> del req.req_kwargs['data']
+
+Sometimes, the requests library can be noisy...especially about SSL stuff.
+We can shut it up a little (normally, this would issue SSL warnings)
+>>> req.gooble_warnings = True
+>>> req.request('get', 'https://www.google.com', verify=False)
+<Response [200]>
+
+IRequest Utilities
+-------------------
+In order to have a seamless, but also configurable implementation available
+to be used within the Sparc framework, there is default IRequest utility
+available.
+
+>>> from zope.component import getSiteManager
+>>> from sparc.utils.requests import IRequest
+>>> sm = getSiteManager()
+>>> IRequest.providedBy(sm.getUtility(IRequest))
+True
+
+It is best to access this component via the request_resolver()
+>>> resolver = sm.getUtility(IRequest, u'sparc.utils.requests.request_resolver')
+>>> IRequest.providedBy(sm.getUtility(IRequest))
+True
+
+The resolver is most useful for developers needing to leverage IRequest but 
+wanting to provide flexibility on the instance used.  Here's an example
+function that uses the resolver.
+
+>>> def example(requests=None):
+...     req = sm.getUtility(IRequest, u'sparc.utils.requests.request_resolver')(requests)
+...     return req.request('get', 'http://www.google.com')
+
+We can now either pass in a IRequest, or by default, the registered IRequest
+would be used instead.

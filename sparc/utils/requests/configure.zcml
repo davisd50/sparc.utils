@@ -7,5 +7,14 @@
     	component=".request.requestFactory"
     	name="sparc.utils.requests.request"
     	/>
+    <utility
+        provides=".IRequest"
+        component=".request.SparcRequest"
+        />
+    <utility
+        provides=".IRequest"
+        component=".request.request_resolver"
+    	name="sparc.utils.requests.request_resolver"
+        />
 
 </configure>
