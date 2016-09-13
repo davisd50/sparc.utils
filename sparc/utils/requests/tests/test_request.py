@@ -3,14 +3,14 @@ import unittest
 import zope.testrunner
 from zope import component
 from sparc.testing.fixture import test_suite_mixin
-from sparc.testing.testlayer import SPARC_INTEGRATION_LAYER
+from sparc.utils.testing import SPARC_UTILS_INTEGRATION_LAYER
 from sparc.utils.requests.interfaces import IRequest
 from zope.component import createObject
 
 import sparc.utils.requests.request
 
 class SparcUtilsRequestTestCase(unittest.TestCase):
-    layer = SPARC_INTEGRATION_LAYER
+    layer = SPARC_UTILS_INTEGRATION_LAYER
     sm = component.getSiteManager()
     
     def unregister_request(self):
@@ -46,6 +46,7 @@ class SparcUtilsRequestTestCase(unittest.TestCase):
         
 
 class test_suite(test_suite_mixin):
+    layer = SPARC_UTILS_INTEGRATION_LAYER
     package = 'sparc.utils.requests'
     module = 'request'
     

@@ -34,10 +34,12 @@ setup(name='sparc.utils',
       install_requires=[
           'setuptools',
           'zope.interface',
-          'requests'
+          'requests',
+          'sparc.entity'
           # -*- Extra requirements: -*-
       ],
       tests_require=[
+          'zope.testrunner',
           'sparc.testing'
       ],
       entry_points="""

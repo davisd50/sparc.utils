@@ -1,0 +1,11 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    i18n_domain="sparc.utils">
+
+    <utility
+    	component=".input.cliInputFactory"
+    	name="sparc.utils.cli.input"
+    	/>
+
+</configure>

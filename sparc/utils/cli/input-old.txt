@@ -1,0 +1,43 @@
+================
+ASKING QUESTIONS
+================
+In order to test this component, we need to implement ISelectedChoice in a way
+that does not require STDIN/OUT processing.  later, we'll over-write the named
+utility 'sparc.common.cli_selected_choice' with our implementation.
+
+    >>> from zope.interface import implements
+    >>> from sparc.common.interfaces import ISelectedChoice
+    >>> class testSelectedChoice(object):
+    ...     implements(ISelectedChoice)
+    ...     @classmethod
+    ...     def selection(cls):
+    ...         return '2' # we're A-OK
+
+A named utility is exposed that simplifies the process of retrieving
+information from a person executing a command line application.
+
+    >>> import sparc.common
+    >>> import sparc.common.cli
+    >>> from sparc.common import ICallable
+    >>> from zope.component import getUtility
+    
+    Now we need to overwrite the 'sparc.common.cli_selected_choice' utility
+    with our test implementation.
+    
+    >>> from zope.component import getSiteManager
+    >>> sm = getSiteManager()
+    >>> sm.unregisterUtility(component=sparc.common.cli.cliSelectedChoice, provided=ISelectedChoice, name=u'sparc.common.cli_selected_choice')
+    True
+    >>> sm.registerUtility(testSelectedChoice, ISelectedChoice, u'sparc.common.cli_selected_choice')
+    
+    Now we can test our utility
+    
+    >>> asker = getUtility(ICallable, 'sparc.common.ask_question')
+    >>> answer = asker(u"How are you?", required = True, answers = [{'1':'awesome'},{'2':'ok'},{'3':'not so good'}], tries = 3)
+    How are you?
+    (1) awesome
+    (2) ok
+    (3) not so good
+    
+    >>> print answer
+    2
