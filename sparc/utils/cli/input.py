@@ -1,14 +1,12 @@
+from builtins import input
 from zope import interface
 from zope.component.factory import Factory
 
 from .exceptions import CliInvalidInput, CliTooManyAtempts
-from interfaces import ICliInput
-from __builtin__ import int
+from .interfaces import ICliInput
 
-
+@interface.implementer(ICliInput)
 class CliInput(object):
-    interface.implements(ICliInput)
-    
     def _get_return_value(self, input_):
         if not self._selections:
             return input_
@@ -19,7 +17,7 @@ class CliInput(object):
         raise AssertionError("Unknown internal code error.")
 
     def _raw_input(self):
-        return raw_input() #blocks
+        return input() #blocks
     
     def _get_input(self, constraints):
         input_ = self._raw_input()
@@ -47,7 +45,7 @@ class CliInput(object):
         return new
 
     def _print(self, text):
-        print text
+        print(text)
 
     def ask(self, question, required = True, tries = 3, selections = (), constraints = ()):
         tries = abs(int(tries)) if abs(int(tries)) else 1

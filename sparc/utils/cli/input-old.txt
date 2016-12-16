@@ -5,10 +5,10 @@ In order to test this component, we need to implement ISelectedChoice in a way
 that does not require STDIN/OUT processing.  later, we'll over-write the named
 utility 'sparc.common.cli_selected_choice' with our implementation.
 
-    >>> from zope.interface import implements
+    >>> from zope.interface import implementer
     >>> from sparc.common.interfaces import ISelectedChoice
+    >>> @implementer(ISelectedChoice)
     >>> class testSelectedChoice(object):
-    ...     implements(ISelectedChoice)
     ...     @classmethod
     ...     def selection(cls):
     ...         return '2' # we're A-OK
@@ -39,5 +39,5 @@ information from a person executing a command line application.
     (2) ok
     (3) not so good
     
-    >>> print answer
+    >>> print(answer)
     2

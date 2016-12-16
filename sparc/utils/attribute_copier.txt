@@ -28,8 +28,8 @@ Now we'll create our target object and copy the attributes
 >>> copier(object_a, object_b, ITest1, ITest2)
 >>> object_b.a
 'a'
->>> object_b.b
-u'b'
+>>> str(object_b.b)
+'b'
 >>> hasattr(object_b, 'c')
 False
 >>> object_b.d

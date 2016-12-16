@@ -2,14 +2,13 @@ import requests
 import warnings
 from zope.component import getSiteManager
 from zope.component.factory import Factory
-from zope.interface import implementer
-from zope.interface import implements
+from zope import interface
 from zope.schema.fieldproperty import FieldProperty
-from interfaces import IRequest
+from .interfaces import IRequest
 from sparc.entity.entity import BaseSchemaObject 
 
+@interface.implementer(IRequest)
 class Request(BaseSchemaObject):
-    implements(IRequest)
     req_kwargs = FieldProperty(IRequest['req_kwargs'])
     gooble_warnings = FieldProperty(IRequest['gooble_warnings'])
     
@@ -25,7 +24,7 @@ class Request(BaseSchemaObject):
 requestFactory = Factory(Request)
 SparcRequest = requestFactory()
 
-@implementer(IRequest)
+@interface.implementer(IRequest)
 def request_resolver(**kwargs):
     """Resolve for a IRequest and return
     

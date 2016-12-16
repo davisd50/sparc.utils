@@ -1,7 +1,7 @@
 from zope.interface import Attribute
 from zope.interface import implementer
 from zope.schema.interfaces import IField
-from interfaces import IReferenceAttributeCopier
+from .interfaces import IReferenceAttributeCopier
 
 @implementer(IReferenceAttributeCopier)
 def attribute_copier(from_object, to_object, *interfaces):

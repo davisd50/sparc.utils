@@ -1,1 +1,1 @@
-from interfaces import IReferenceAttributeCopier
+from .interfaces import IReferenceAttributeCopier
