@@ -8,5 +8,6 @@
 
     <!-- Required Sparc Components -->
     <include package="." />
+    <include package="sparc.configuration" />
 
 </configure>

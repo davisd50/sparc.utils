@@ -71,3 +71,33 @@ function that uses the resolver.
 
 We can now either pass in a IRequest, or by default, the registered IRequest
 would be used instead.
+
+
+IRequest Adapters
+-------------------
+We can adapt a sparc.configuration.container.ISparcAppPyContainerConfiguration
+provider into an IRequest provider.  This is mainly useful when dealing with
+components that are capable of having YAML specs delivered based on
+sparc.configuration.yaml.ISparcYamlDocuments.
+
+Let's create a basic YAML config
+>>> yaml_doc = """
+... RequestOptions:
+...  req_kwargs: 
+...   verify: True
+...  gooble_warnings: True
+... """
+
+We can get a ISparcAppPyContainerConfiguration from this
+>>> from sparc.configuration import yaml
+>>> config = sm.getUtility(yaml.ISparcYamlDocuments).first(yaml_doc)
+
+We can now adapt this into IRequest and see that the yaml configuration has
+been applied appropriately
+>>> req = IRequest(config)
+>>> IRequest.providedBy(req)
+True
+>>> req.gooble_warnings
+True
+>>> req.req_kwargs['verify']
+True

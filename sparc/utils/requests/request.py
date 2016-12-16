@@ -1,10 +1,11 @@
 import requests
 import warnings
-from zope.component import getSiteManager
+from zope import component
 from zope.component.factory import Factory
 from zope import interface
 from zope.schema.fieldproperty import FieldProperty
 from .interfaces import IRequest, IRequestResolver
+from sparc.configuration import container
 from sparc.entity.entity import BaseSchemaObject 
 
 @interface.implementer(IRequest)
@@ -35,5 +36,18 @@ def request_resolver(**kwargs):
     """
     if 'request' in kwargs and IRequest.providedBy(kwargs['request']):
         return kwargs['request']
-    sm = getSiteManager()
+    sm = component.getSiteManager()
     return sm.queryUtility(IRequest, default=requestFactory())
+
+@interface.implementer(IRequest)
+@component.adapter(container.ISparcAppPyContainerConfiguration)
+class RequestFromSparcAppPyContainerConfiguration(Request):
+    """Adapts from the first RequestOptions found"""
+    def __init__(self, context):
+        self.context = context
+        RequestOptions = container.IPyContainerConfigValue(context).query('RequestOptions')
+        if RequestOptions:
+            if 'req_kwargs' in RequestOptions:
+                self.req_kwargs = RequestOptions['req_kwargs']
+            if 'gooble_warnings' in RequestOptions:
+                self.gooble_warnings = RequestOptions['gooble_warnings']

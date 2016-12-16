@@ -35,6 +35,7 @@ setup(name='sparc.utils',
           'setuptools',
           'zope.interface',
           'requests',
+          'sparc.configuration',
           'sparc.entity'
           # -*- Extra requirements: -*-
       ],

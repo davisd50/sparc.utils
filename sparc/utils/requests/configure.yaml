@@ -1,0 +1,8 @@
+#RequestOptions
+# Definable options to allow runtime configuration of lower-level calls to
+# requests library.
+RequestOptions:
+ req_kwargs: #optional
+  kw_1: value_1 #kwargs that will be delivered to all calls (GET/POST/etc..) to requests lib 
+  kw_2: value_2
+ gooble_warnings: False #optional, True will gooble warnings issued by requests lib calls

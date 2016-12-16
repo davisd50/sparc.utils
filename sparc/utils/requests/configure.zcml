@@ -17,5 +17,10 @@
         provides=".IRequestResolver"
         component=".request.request_resolver"
         />
+    <adapter
+        provides=".IRequest"
+        for="sparc.configuration.container.ISparcAppPyContainerConfiguration"
+        factory=".request.RequestFromSparcAppPyContainerConfiguration"
+        />
 
 </configure>
