@@ -19,3 +19,17 @@ class IRequest(Interface):
         kwargs delivered to method will over-ride competing entries found in
         IRequest.req_kwargs defaults
         """
+
+class IRequestResolver(Interface):
+    def __call__(request=None):
+        """Return IRequest provider
+        
+        Return an appropriate IRequest provider based on the following
+        resolution order for the related requests.request object:
+         - return kwarg['request'] if it provides IRequest
+         - return unnamed utility singleton providing IRequest in ZCA if found
+         - return newly created IRequest with new requests.request
+        
+        kwargs:
+            request: IRequest provider
+        """

@@ -51,14 +51,14 @@ to be used within the Sparc framework, there is default IRequest utility
 available.
 
 >>> from zope.component import getSiteManager
->>> from sparc.utils.requests import IRequest
+>>> from sparc.utils.requests import IRequest, IRequestResolver
 >>> sm = getSiteManager()
 >>> IRequest.providedBy(sm.getUtility(IRequest))
 True
 
 It is best to access this component via the request_resolver()
->>> resolver = sm.getUtility(IRequest, u'sparc.utils.requests.request_resolver')
->>> IRequest.providedBy(sm.getUtility(IRequest))
+>>> resolver = sm.getUtility(IRequestResolver)
+>>> IRequest.providedBy(resolver())
 True
 
 The resolver is most useful for developers needing to leverage IRequest but 

@@ -14,9 +14,8 @@
         component=".request.SparcRequest"
         />
     <utility
-        provides=".IRequest"
+        provides=".IRequestResolver"
         component=".request.request_resolver"
-    	name="sparc.utils.requests.request_resolver"
         />
 
 </configure>

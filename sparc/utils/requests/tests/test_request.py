@@ -4,7 +4,7 @@ import zope.testrunner
 from zope import component
 from sparc.testing.fixture import test_suite_mixin
 from sparc.utils.testing import SPARC_UTILS_INTEGRATION_LAYER
-from sparc.utils.requests.interfaces import IRequest
+from sparc.utils.requests.interfaces import IRequest, IRequestResolver
 from zope.component import createObject
 
 import sparc.utils.requests.request
@@ -32,7 +32,7 @@ class SparcUtilsRequestTestCase(unittest.TestCase):
     def test_request_resolver(self):
         req = createObject(u'sparc.utils.requests.request')
         
-        resolver = self.sm.getUtility(IRequest, u'sparc.utils.requests.request_resolver')
+        resolver = self.sm.getUtility(IRequestResolver)
         self.assertIs(resolver(request=req), req)
         
         registered_req = self.sm.getUtility(IRequest)

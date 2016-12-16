@@ -4,7 +4,7 @@ from zope.component import getSiteManager
 from zope.component.factory import Factory
 from zope import interface
 from zope.schema.fieldproperty import FieldProperty
-from .interfaces import IRequest
+from .interfaces import IRequest, IRequestResolver
 from sparc.entity.entity import BaseSchemaObject 
 
 @interface.implementer(IRequest)
@@ -24,7 +24,7 @@ class Request(BaseSchemaObject):
 requestFactory = Factory(Request)
 SparcRequest = requestFactory()
 
-@interface.implementer(IRequest)
+@interface.implementer(IRequestResolver)
 def request_resolver(**kwargs):
     """Resolve for a IRequest and return
     
