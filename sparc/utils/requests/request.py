@@ -13,15 +13,19 @@ class Request(BaseSchemaObject):
     req_kwargs = FieldProperty(IRequest['req_kwargs'])
     gooble_warnings = FieldProperty(IRequest['gooble_warnings'])
     
+    def __init__(self, **kwargs):
+        super(Request, self).__init__(**kwargs)
+        self.requester = kwargs.get('requester', requests)
+    
     def request(self, *args, **kwargs):
         kwargs_updated = self.req_kwargs.copy()
         kwargs_updated.update(kwargs)
         if self.gooble_warnings:
             with warnings.catch_warnings():
                 warnings.simplefilter("ignore")
-                return requests.request(*args, **kwargs_updated)
+                return self.requester.request(*args, **kwargs_updated)
         else:
-            return requests.request(*args, **kwargs_updated)
+            return self.requester.request(*args, **kwargs_updated)
 requestFactory = Factory(Request)
 SparcRequest = requestFactory()
 
@@ -51,3 +55,4 @@ class RequestFromSparcAppPyContainerConfiguration(Request):
                 self.req_kwargs = RequestOptions['req_kwargs']
             if 'gooble_warnings' in RequestOptions:
                 self.gooble_warnings = RequestOptions['gooble_warnings']
+        super(RequestFromSparcAppPyContainerConfiguration, self).__init__()
