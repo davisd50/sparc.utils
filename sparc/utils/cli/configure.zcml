@@ -7,5 +7,10 @@
     	component=".input.cliInputFactory"
     	name="sparc.utils.cli.input"
     	/>
+    	
+	<utility
+	    component=".command.CommandLaunchFactory"
+	    name="sparc.utils.cli.command_launch"
+        />
 
 </configure>

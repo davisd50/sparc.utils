@@ -1,0 +1,15 @@
+# Command Launch Helper
+This utility helps to identify and prepare lists that can be passed to 
+subprocess.call().  We'll use the ZCA configured component to test this
+utility.
+
+Ok, let's get an object
+>>> from zope.component import createObject
+>>> args = ['ping', ['-c', '1', 'www.google.com']]
+>>> myCommand = createObject(u'sparc.utils.cli.command_launch', *args)
+
+now let's run the program
+>>> import subprocess
+>>> subprocess.call(myCommand)
+0
+    

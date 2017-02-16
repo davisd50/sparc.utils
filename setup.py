@@ -35,6 +35,7 @@ setup(name='sparc.utils',
       install_requires=[
           'setuptools',
           'zope.interface',
+          'zope.location',
           'requests',
           'sparc.configuration',
           'sparc.entity'

@@ -1,8 +1,7 @@
-from zope.interface import Interface
+from zope import interface
+from zope import location
 
-from .exceptions import CliTooManyAtempts
-
-class ICliInput(Interface):
+class ICliInput(interface.Interface):
     def ask(question, required = True, tries = 3, selections = (), constraints = ()):
         """Ask for user input from STDIN (i.e. CLI)
         
@@ -28,10 +27,23 @@ class ICliInput(Interface):
             constraint:  iterable of Callables raising CliInvalidInput if
                          user input does not pass contraint check.
         Raises:
-            CliInvalidInput
-            CliTooManyAtempts
+            .exceptions.CliInvalidInput
+            .exceptions.CliTooManyAtempts
         Returns:
             if no selections, then direct user input
             if selections, then
                 tuple entry 3 (if given) of selected entry else tuple entry 2
         """
+
+class ICommandLaunch(location.ILocation):
+    """Create Python subprocess.call() arguments with potentially unknown executable location
+    
+    Also provides ILocation where __parent__ is the directory the executable
+    is location and __name__ is the executable.
+    """
+    
+    def __iter__():
+        """iterator of args that can be delivered to subprocess.call()"""
+    
+    def validate():
+        """True if executable can be located (Windows) and can be executed (Unix)"""
