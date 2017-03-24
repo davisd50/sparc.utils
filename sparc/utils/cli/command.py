@@ -1,7 +1,7 @@
 import os
 from zope import interface
 from zope.component.factory import Factory
-from . import ICommandLaunch
+from .interfaces import ICommandLaunch
 
 @interface.implementer(ICommandLaunch)
 class CommandLaunch(object):
